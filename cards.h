@@ -7,6 +7,7 @@
 #include <cassert>
 #include <cmath>
 #include <algorithm>
+#include <vector>
 
 
 class card{
@@ -91,6 +92,40 @@ class sdeck{
         for(unsigned i=0; i<51; ++i)
         D[i]=D[i+1];
         D[52]=temp;
+        return temp;
+    }
+};
+    
+///Dynamic Deck - Draw With no Replacement
+class ddeck{
+    private:
+    std::vector<card> D;
+    
+    public:
+    //Constructor
+    ddeck() {
+        for(unsigned i=0; i<52; ++i){
+            card temp(i);
+            D.push_back(i);
+        }
+    }
+    
+    //Accessor
+    const card& operator[](const unsigned& i) const {
+        assert(i<D.size());
+        return D[i];
+    }
+    
+    //Shuffle
+    ddeck& shuffle() {
+        std::random_shuffle(std::begin(D),std::end(D));
+        return *this;
+    }
+    
+    //Draw
+    card draw() {
+        card temp = D[0];
+        D.erase(D.begin());
         return temp;
     }
 };
